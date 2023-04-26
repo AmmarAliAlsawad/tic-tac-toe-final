@@ -4,13 +4,8 @@ namespace TicTacToe
 {
     internal class Program
     {
-        using System;
-
-namespace TicTacToe
-{
-    internal class Program
-    {
         static int[] board = new int[9]; // initialize the game board
+
         static void Main(string[] args)
         {
             // clear the game board
@@ -32,10 +27,11 @@ namespace TicTacToe
             Random rand = new Random();
 
             // start the game loop
-            while (checkForWinner() == 0) {
-                
+            while (checkForWinner() == 0)
+            {
                 // player's turn
-                if (playerFirst) {
+                if (playerFirst)
+                {
                     // get user's turn
                     while (userTurn == -1 || board[userTurn] != 0)
                     {
@@ -48,9 +44,9 @@ namespace TicTacToe
                 }
 
                 // computer's turn
-                while((computerTurn == -1) || (board[computerTurn] != 0))
+                while ((computerTurn == -1) || (board[computerTurn] != 0))
                 {
-                    computerTurn = rand.Next(8);
+                    computerTurn = rand.Next(9);
                 }
                 board[computerTurn] = (playerSymbol == "X") ? 2 : 1;
                 Console.WriteLine("Computer chooses " + computerTurn);
@@ -65,36 +61,42 @@ namespace TicTacToe
             // announce the winner
             string winner = (checkForWinner() == 1) ? playerSymbol : (playerSymbol == "X") ? "O" : "X";
             Console.WriteLine("Player " + winner + " won the game!");
-
         }
 
         // check for a winner and return the player number or 0 if no winner
         private static int checkForWinner()
-        {           
+        {
             // check rows
-            for (int i = 0; i <= 6; i += 3) {
-                if (board[i] != 0 && board[i] == board[i + 1] && board[i + 1] == board[i + 2]) {
+            for (int i = 0; i <= 6; i += 3)
+            {
+                if (board[i] != 0 && board[i] == board[i + 1] && board[i + 1] == board[i + 2])
+                {
                     return board[i];
                 }
             }
 
             // check columns
-            for (int i = 0; i <= 2; i++) {
-                if (board[i] != 0 && board[i] == board[i + 3] && board[i + 3] == board[i + 6]) {
+            for (int i = 0; i <= 2; i++)
+            {
+                if (board[i] != 0 && board[i] == board[i + 3] && board[i + 3] == board[i + 6])
+                {
                     return board[i];
                 }
             }
 
             // check diagonals
-            if (board[0] != 0 && board[0] == board[4] && board[4] == board[8]) {
+            if (board[0] != 0 && board[0] == board[4] && board[4] == board[8])
+            {
                 return board[0];
             }
-            if (board[2] != 0 && board[2] == board[4] && board[4] == board[6]) {
+            if (board[2] != 0 && board[2] == board[4] && board[4] == board[6])
+            {
                 return board[2];
             }
 
-            return 0; 
+            return 0;
         }
+
 
         // print the game board
         private static void printBoard()
