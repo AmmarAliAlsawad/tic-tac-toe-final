@@ -4,6 +4,12 @@ namespace TicTacToe
 {
     internal class Program
     {
+        using System;
+
+namespace TicTacToe
+{
+    internal class Program
+    {
         static int[] board = new int[9]; // initialize the game board
         static void Main(string[] args)
         {
@@ -13,6 +19,14 @@ namespace TicTacToe
                 board[i] = 0;
             }
 
+            // get player's symbol
+            Console.WriteLine("Choose your symbol (X or O):");
+            string playerSymbol = Console.ReadLine().ToUpper();
+
+            // get player's turn preference
+            Console.WriteLine("Do you want to go first? (Y/N):");
+            bool playerFirst = (Console.ReadLine().ToUpper() == "Y");
+
             int userTurn = -1;
             int computerTurn = -1;
             Random rand = new Random();
@@ -20,30 +34,37 @@ namespace TicTacToe
             // start the game loop
             while (checkForWinner() == 0) {
                 
-                // get user's turn
-                while (userTurn == -1 || board[userTurn] != 0)
-                {
-                    Console.WriteLine("Please enter a number from 0 to 8");
-                    userTurn = int.Parse(Console.ReadLine());
-                    Console.WriteLine("You typed " + userTurn);
+                // player's turn
+                if (playerFirst) {
+                    // get user's turn
+                    while (userTurn == -1 || board[userTurn] != 0)
+                    {
+                        Console.WriteLine("Please enter a number from 0 to 8");
+                        userTurn = int.Parse(Console.ReadLine());
+                        Console.WriteLine("You typed " + userTurn);
+                    }
+                    board[userTurn] = (playerSymbol == "X") ? 1 : 2;
+                    printBoard(); // print the updated game board
                 }
-                board[userTurn] = 1;
 
-                // get computer's turn
+                // computer's turn
                 while((computerTurn == -1) || (board[computerTurn] != 0))
                 {
                     computerTurn = rand.Next(8);
-                    
-                    Console.WriteLine("computer chooses " + computerTurn);
-                    
                 }
-
-                board[computerTurn] = 2;
+                board[computerTurn] = (playerSymbol == "X") ? 2 : 1;
+                Console.WriteLine("Computer chooses " + computerTurn);
                 printBoard(); // print the updated game board
 
+                // switch turn order
+                playerFirst = true;
+                userTurn = -1;
+                computerTurn = -1;
             }
+
             // announce the winner
-            Console.WriteLine("Player " + checkForWinner() + " won the game!");
+            string winner = (checkForWinner() == 1) ? playerSymbol : (playerSymbol == "X") ? "O" : "X";
+            Console.WriteLine("Player " + winner + " won the game!");
 
         }
 
